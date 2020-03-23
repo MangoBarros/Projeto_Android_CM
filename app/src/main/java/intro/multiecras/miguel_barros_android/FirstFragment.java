@@ -30,6 +30,8 @@ public class FirstFragment extends Fragment {
     private NotaViewModel mNotaViewModel;
     private Object FragmentTransaction;
 
+    //Ola
+
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
