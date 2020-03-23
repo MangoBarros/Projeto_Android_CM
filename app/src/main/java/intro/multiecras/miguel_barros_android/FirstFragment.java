@@ -1,17 +1,14 @@
 package intro.multiecras.miguel_barros_android;
 
-import android.app.Application;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-import java.util.ArrayList;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -28,9 +25,6 @@ public class FirstFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private NotaListAdapter mAdapter;
     private NotaViewModel mNotaViewModel;
-    private Object FragmentTransaction;
-
-    //Ola
 
     @Override
     public View onCreateView(
@@ -38,7 +32,9 @@ public class FirstFragment extends Fragment {
             Bundle savedInstanceState
 
     ) {
-        View listFragment= inflater.inflate(R.layout.fragment_first, container, false);
+
+
+        final View listFragment= inflater.inflate(R.layout.fragment_first, container, false);
         RecyclerView recyclerView = listFragment.findViewById(R.id.recyclerview);
         mAdapter = new NotaListAdapter(this.getContext());
         recyclerView.setAdapter(mAdapter);
@@ -57,6 +53,9 @@ public class FirstFragment extends Fragment {
             }
         });
 
+
+
+
         //ola 2
         //ola 3
         // Inflate the layout for this fragment
@@ -67,7 +66,15 @@ public class FirstFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        FloatingActionButton fab = view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController( FirstFragment.this)
+                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
 
+            }
+        });
 
 
     }

@@ -21,6 +21,11 @@ public interface NotaDao {
 
     @Query("SELECT * FROM notas")
     LiveData<List<Nota>> getAllNotas();
+
+
+    @Query("SELECT * FROM notas LIMIT 1")
+    Nota[] getAnyNota();
+
     }
 
 

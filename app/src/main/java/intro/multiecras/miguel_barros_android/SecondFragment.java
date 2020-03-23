@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 public class SecondFragment extends Fragment {
+    public static final String EXTRA_REPLY =
+            "com.example.android.roomwordssample.REPLY";
 
     @Override
     public View onCreateView(

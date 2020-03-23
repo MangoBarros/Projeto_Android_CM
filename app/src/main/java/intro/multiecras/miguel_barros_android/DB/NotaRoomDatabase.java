@@ -62,12 +62,14 @@ public abstract class NotaRoomDatabase extends RoomDatabase {
             // Start the app with a clean database every time.
             // Not needed if you only populate the database
             // when it is first created
-            mDao.deleteAll();
-
-            for (int i = 0; i <= titulos.length - 1; i++) {
-                Nota nota = new Nota(titulos[i],descricoes[i], cidades[i]);
-                mDao.insert(nota);
+            //mDao.deleteAll();
+            if(mDao.getAnyNota().length < 1){
+                for (int i = 0; i <= titulos.length - 1; i++) {
+                    Nota nota = new Nota(titulos[i],descricoes[i], cidades[i]);
+                    mDao.insert(nota);
+                }
             }
+
             return null;
         }
     }
