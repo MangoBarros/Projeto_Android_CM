@@ -1,5 +1,6 @@
 package intro.multiecras.miguel_barros_android;
 
+import android.app.Activity;
 import android.app.Application;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -27,7 +29,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import intro.multiecras.miguel_barros_android.DB.Notas.Nota;
 
 public class MainActivity extends AppCompatActivity {
-
+    public String accept = "none";
+    private NotaViewModel mNotaViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +39,16 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mNotaViewModel = ViewModelProviders.of(this).get(NotaViewModel.class);
+        mNotaViewModel.deleteAll();
+
 
 
     }
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -53,6 +63,16 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        if (id == R.id.clear_data) {
+            // Add a toast just for confirmation
+            Toast.makeText(this, "Clearing the data...",
+                    Toast.LENGTH_SHORT).show();
+            mNotaViewModel.deleteAll();
+            // Delete the existing data
+
+            return true;
+        }
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {

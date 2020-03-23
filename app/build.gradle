@@ -56,4 +56,3 @@ dependencies {
     annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version"
 
 }
-

@@ -32,6 +32,8 @@ public class NotaListAdapter extends RecyclerView.Adapter<NotaListAdapter.NotaVi
         if (mNotas != null) {
             Nota current = mNotas.get(position);
             holder.NotaItemView.setText(current.getTitulo());
+            holder.NotaDescView.setText(current.getDescricao());
+            holder.NotaCidadeView.setText(current.getCidade());
         } else {
             // Covers the case of data not being ready yet.
             holder.NotaItemView.setText("No Title");
@@ -54,10 +56,20 @@ public class NotaListAdapter extends RecyclerView.Adapter<NotaListAdapter.NotaVi
 
     class NotaViewHolder extends RecyclerView.ViewHolder {
         private final TextView NotaItemView;
+        private final TextView NotaCidadeView;
+        private final TextView NotaDescView;
+
 
         private NotaViewHolder(View itemView) {
             super(itemView);
             NotaItemView = itemView.findViewById(R.id.titulo);
+            NotaCidadeView = itemView.findViewById(R.id.Cidade);
+            NotaDescView = itemView.findViewById(R.id.Descricao);
+
         }
+    }
+
+    public Nota getNotaAtPosition (int position){
+        return mNotas.get(position);
     }
 }
