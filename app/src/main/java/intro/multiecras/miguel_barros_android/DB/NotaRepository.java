@@ -2,11 +2,12 @@ package intro.multiecras.miguel_barros_android.DB;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
 import intro.multiecras.miguel_barros_android.DB.Categorias.Categoria;
 import intro.multiecras.miguel_barros_android.DB.Categorias.CategoriaDao;
 import intro.multiecras.miguel_barros_android.DB.Notas.Nota;
@@ -45,12 +46,49 @@ public class NotaRepository {
         new deleteNotaAsyncTask(mNotaDao).execute(nota);
     }
 
+    public void updateNota(Nota nota){ new updateNotaAsyncTask(mNotaDao).execute(nota);}
+
     public void insert(Categoria categoria){
         new insertAsyncTaskCategoria(mCategoriaDao).execute(categoria);
     }
 
     public void deleteAll() {
         new deleteAllNotasAsyncTask(mNotaDao).execute();
+    }
+
+    public Nota getNota(Integer id) throws ExecutionException, InterruptedException {
+        Integer[] ids = {id};
+        return new getAsyncTaskNota(mNotaDao).execute(ids).get();
+
+
+    }
+
+    private static class updateNotaAsyncTask extends AsyncTask<Nota, Void, Void>{
+        private NotaDao mAsyncTaskDao;
+
+        updateNotaAsyncTask(NotaDao dao){
+            mAsyncTaskDao = dao;
+        }
+        @Override
+        protected Void doInBackground(Nota... notas) {
+            mAsyncTaskDao.updateNota(notas[0]);
+            return null;
+        }
+    }
+
+    private static class getAsyncTaskNota extends AsyncTask<Integer, Void,Nota>{
+        private NotaDao mAsyncTaskDao;
+
+        getAsyncTaskNota(NotaDao dao){
+            mAsyncTaskDao = dao;
+        };
+
+        @Override
+        protected Nota doInBackground(Integer... integers) {
+            Log.i("wow", String.valueOf(integers.length));
+
+            return mAsyncTaskDao.getNotaById(integers[0]);
+        }
     }
 
     //Insert Async to nota

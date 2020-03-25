@@ -1,8 +1,10 @@
 package intro.multiecras.miguel_barros_android;
 
 import android.app.Application;
+import android.os.AsyncTask;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -41,5 +43,15 @@ public class NotaViewModel extends AndroidViewModel {
         mRepository.deleteNota(nota);
     }
 
+    public Nota getNotaById(Integer id) throws ExecutionException, InterruptedException {
+
+        Nota nota = mRepository.getNota(id);
+        return nota;
+
+    }
+
+    public void update(Nota nota) {
+        mRepository.updateNota(nota);
+    }
 }
 

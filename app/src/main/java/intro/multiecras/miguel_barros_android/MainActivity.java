@@ -40,15 +40,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mNotaViewModel = ViewModelProviders.of(this).get(NotaViewModel.class);
-        mNotaViewModel.deleteAll();
+        //mNotaViewModel.deleteAll();
 
 
 
     }
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

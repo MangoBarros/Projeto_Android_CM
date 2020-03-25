@@ -5,12 +5,11 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.Update;
+import intro.multiecras.miguel_barros_android.DB.Categorias.Categoria;
 
 @Entity(tableName = "notas")
 public class Nota {
-
-
-
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -68,4 +67,6 @@ public class Nota {
     public void setId(int id){
         this.id = id;
     }
+
+
 }

@@ -8,14 +8,15 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import intro.multiecras.miguel_barros_android.DB.Notas.Nota;
 
 
-public class NotaListAdapter extends RecyclerView.Adapter<NotaListAdapter.NotaViewHolder> {
+public class NotaListAdapter extends RecyclerView.Adapter<NotaListAdapter.NotaViewHolder>  {
     private final LayoutInflater mInflater;
     private List<Nota> mNotas;
-
+    private static ClickListener clickListener;
 
     NotaListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -54,10 +55,11 @@ public class NotaListAdapter extends RecyclerView.Adapter<NotaListAdapter.NotaVi
         else return 0;
     }
 
-    class NotaViewHolder extends RecyclerView.ViewHolder {
+    class NotaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
         private final TextView NotaItemView;
         private final TextView NotaCidadeView;
         private final TextView NotaDescView;
+
 
 
         private NotaViewHolder(View itemView) {
@@ -65,11 +67,32 @@ public class NotaListAdapter extends RecyclerView.Adapter<NotaListAdapter.NotaVi
             NotaItemView = itemView.findViewById(R.id.titulo);
             NotaCidadeView = itemView.findViewById(R.id.Cidade);
             NotaDescView = itemView.findViewById(R.id.Descricao);
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
 
         }
+        @Override
+        public void onClick(View v){
+            clickListener.onItemClick(getAdapterPosition(), v);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            clickListener.onItemLongClick(getAdapterPosition(),v);
+            return false;
+        }
+    }
+
+    public void setOnItemClickListener(ClickListener clickListener){
+        NotaListAdapter.clickListener = clickListener;
     }
 
     public Nota getNotaAtPosition (int position){
         return mNotas.get(position);
+    }
+
+    public interface ClickListener{
+        void onItemClick(int position, View v);
+        void onItemLongClick(int position, View v);
     }
 }

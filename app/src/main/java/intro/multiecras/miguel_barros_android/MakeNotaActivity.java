@@ -29,8 +29,6 @@ public class MakeNotaActivity extends AppCompatActivity {
         mDescriptionView = findViewById(R.id.input_desc);
         final Button button = findViewById(R.id.btn_create);
         button.setOnClickListener(new View.OnClickListener(){
-
-
             @Override
             public void onClick(View v) {
                 Intent replyIntent = new Intent();
@@ -48,8 +46,6 @@ public class MakeNotaActivity extends AppCompatActivity {
 
                 }
                 finish();
-
-
             }
         });
     }

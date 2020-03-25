@@ -4,14 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -22,9 +25,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import intro.multiecras.miguel_barros_android.DB.Notas.Nota;
+import intro.multiecras.miguel_barros_android.DB.Notas.NotaDao;
 
 
 import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_FIRST_USER;
 import static android.app.Activity.RESULT_OK;
 
 
@@ -32,6 +37,8 @@ public class FirstFragment extends Fragment {
     public static final String EXTRA_REPLY =
             "com.example.android.roomwordssample.REPLY";
     private static final int NEW_NOTA_ACTIVITY_REQUEST_CODE = 1;
+
+    private static final int EDIT_NOTA_ACTIVITY_REQUEST_CODE = 0;
 
     private final LinkedList<String> mWordList = new LinkedList<>();
     private RecyclerView mRecyclerView;
@@ -45,16 +52,18 @@ public class FirstFragment extends Fragment {
             Bundle savedInstanceState
 
     ) {
+
+        //Instanciate the view
         final View listFragment= inflater.inflate(R.layout.fragment_first, container, false);
 
+        //Implement the Recycler View
         RecyclerView recyclerView = listFragment.findViewById(R.id.recyclerview);
         mAdapter = new NotaListAdapter(this.getContext());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-
+        //Fetch all notas and observe differences.
         mNotaViewModel = ViewModelProviders.of(this).get(NotaViewModel.class);
-
         mNotaViewModel.getAllNotas().observe(getViewLifecycleOwner(), new Observer<List<Nota>>() {
             @Override
             public void onChanged(List<Nota> notas) {
@@ -65,6 +74,26 @@ public class FirstFragment extends Fragment {
             }
         });
 
+        //Methods on click and on long click for the Recycler
+        mAdapter.setOnItemClickListener(new NotaListAdapter.ClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                //Toast.makeText(getContext(),"Click",Toast.LENGTH_LONG).show();
+                Intent editIntent = new Intent(getContext(),EditNotaActivity.class);
+                Nota nota = mAdapter.getNotaAtPosition(position);
+                String[] notaParams = {String.valueOf(nota.getId()), nota.getTitulo(),nota.getCidade(),nota.getDescricao()};
+                editIntent.putExtra("notaParams",notaParams);
+                startActivityForResult(editIntent, EDIT_NOTA_ACTIVITY_REQUEST_CODE);
+            }
+
+            @Override
+            public void onItemLongClick(int position, View v) {
+                //Toast.makeText(getContext(),"Long Click",Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+        //Methods
         ItemTouchHelper helper = new ItemTouchHelper(
                 new ItemTouchHelper.SimpleCallback(0,
                         ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -74,7 +103,6 @@ public class FirstFragment extends Fragment {
                                           RecyclerView.ViewHolder target) {
                         return false;
                     }
-
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder,
                                          int direction) {
@@ -88,11 +116,6 @@ public class FirstFragment extends Fragment {
                 });
         helper.attachToRecyclerView(recyclerView);
 
-
-
-
-        //ola 2
-        //ola 3
         // Inflate the layout for this fragment
         return listFragment;
     }
@@ -108,6 +131,30 @@ public class FirstFragment extends Fragment {
 
             Nota notaFinal = new Nota(titulo,cidade,descricao);
             mNotaViewModel.insert(notaFinal);
+        } else if(requestCode == EDIT_NOTA_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
+            String[] nota = data.getStringArrayExtra(EditNotaActivity.EXTRA_REPLY);
+            Integer id = Integer.valueOf(nota[0]);
+            String titulo = nota[1];
+            String cidade = nota[2];
+            String descricao = nota[3];
+            Nota notaAntiga = null;
+            try {
+                notaAntiga = mNotaViewModel.getNotaById(id);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            notaAntiga.setTitulo(titulo);
+            notaAntiga.setCidade(cidade);
+            notaAntiga.setmDescricao(descricao);
+
+            mNotaViewModel.update(notaAntiga);
+            Toast.makeText(getContext(),"Nota atualizada",Toast.LENGTH_LONG).show();
+
+
+        } else if(requestCode == EDIT_NOTA_ACTIVITY_REQUEST_CODE && resultCode == RESULT_FIRST_USER){
+            System.out.println("voltou");
         } else {
             Toast.makeText(
                     getContext(),
