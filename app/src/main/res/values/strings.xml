@@ -9,8 +9,30 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="empty_not_saved">Erro na Criação</string>
+    <string name="empty_not_saved">Error on Creation</string>
     <string name="delete_all_notes">Delete all Notes</string>
+    <string name="create">Create</string>
+    <string name="description">Description</string>
+    <string name="back">Back</string>
+    <string name="city">City</string>
+    <string name="noteType">Type of Note</string>
+    <string name="title">Title</string>
+
+    // A P F T U
+
+    <string name="automobile">Category: Automobile</string>
+    <string name="personal">Category: Personal</string>
+    <string name="needing_to_make">Category: Objetivos</string>
+    <string name="work">Category: Work</string>
+    <string name="Urgent">Category: Urgent</string>
+
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="english">English</string>
+    <string name="portugues">Portuguese</string>
+    <string name="language">Language</string>
 
 
 </resources>

@@ -79,6 +79,7 @@ public class MakeNotaActivity extends AppCompatActivity implements AdapterView.O
                     setResult(RESULT_CANCELED, replyIntent);
 
                 }else {
+                    // A P F T U
                     //id = 0, titulo = 1, descricao = 2, cidade = 3
                     String titulo = mTitleView.getText().toString();
                     String cidade = mCidadeView.getText().toString();

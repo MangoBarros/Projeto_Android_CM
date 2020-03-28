@@ -27,7 +27,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="40dp"
-        android:layout_toStartOf="@+id/Cidade"
+        android:layout_toStartOf="@+id/Categoria"
         android:ellipsize="end"
         android:maxLines="2"
         android:text="In: Porto"
@@ -40,9 +40,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
         android:layout_marginEnd="15dp"
         android:text="Cidade"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/Categoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Cidade"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="30dp"
+        android:text="wtv"
         android:textColor="#FFFFFF" />
 
 </RelativeLayout>

@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Miguel_Barros_android</string>
+    <string name="action_settings">Definições</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Próximo</string>
+    <string name="previous">Anterior</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="empty_not_saved">Erro na Criação</string>
+    <string name="delete_all_notes">Apagar todas as Notas</string>
+    <string name="create">Criar</string>
+    <string name="description">Descrição</string>
+    <string name="back">Voltar</string>
+    <string name="city">Cidade</string>
+    <string name="noteType">Tipo de Nota</string>
+    <string name="title">Titulo</string>
+
+    <string name="automobile">Categoria: Automovel</string>
+    <string name="personal">Categoria: Pessoal</string>
+    <string name="needing_to_make">Categoria: A-Fazeres</string>
+    <string name="work">Categoria: Trabalho</string>
+    <string name="Urgent">Categoria: Urgente</string>
+
+    <string name="title_activity_settings">Definições</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="english">Ingles</string>
+    <string name="portugues">Portugues</string>
+    <string name="language">Linguagem</string>
+
+</resources>

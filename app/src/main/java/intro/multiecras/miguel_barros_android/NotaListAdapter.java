@@ -40,18 +40,23 @@ public class NotaListAdapter extends RecyclerView.Adapter<NotaListAdapter.NotaVi
             // A P F T U
             switch (current.getCategoria()){
                 case 0:
+                    holder.NotaCategoriaView.setText(R.string.automobile);
                     holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.AutomovelC));
                     break;
                 case 1:
+                    holder.NotaCategoriaView.setText(R.string.personal);
                     holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.PessoalC));
                     break;
                 case 2:
+                    holder.NotaCategoriaView.setText(R.string.needing_to_make);
                     holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.FazeresC));
                     break;
                 case 3:
+                    holder.NotaCategoriaView.setText(R.string.work);
                     holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.TrabalhoC));
                     break;
                 case 4:
+                    holder.NotaCategoriaView.setText(R.string.Urgent);
                     holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.UrgenteC));
                     break;
             }
@@ -79,6 +84,7 @@ public class NotaListAdapter extends RecyclerView.Adapter<NotaListAdapter.NotaVi
         private final TextView NotaItemView;
         private final TextView NotaCidadeView;
         private final TextView NotaDescView;
+        private final TextView NotaCategoriaView;
 
 
 
@@ -87,6 +93,7 @@ public class NotaListAdapter extends RecyclerView.Adapter<NotaListAdapter.NotaVi
             NotaItemView = itemView.findViewById(R.id.titulo);
             NotaCidadeView = itemView.findViewById(R.id.Cidade);
             NotaDescView = itemView.findViewById(R.id.Descricao);
+            NotaCategoriaView = itemView.findViewById(R.id.Categoria);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
 
