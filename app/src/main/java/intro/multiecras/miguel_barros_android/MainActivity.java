@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mNotaViewModel = ViewModelProviders.of(this).get(NotaViewModel.class);
-        //mNotaViewModel.deleteAll();
+
 
 
 
