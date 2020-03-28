@@ -13,6 +13,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.fragment.NavHostFragment;
 
+import static intro.multiecras.miguel_barros_android.R.*;
+
 public class MainActivity extends AppCompatActivity {
     public String accept = "none";
     private NotaViewModel mNotaViewModel;
@@ -20,11 +22,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        setContentView(layout.activity_main);
+        Toolbar toolbar = findViewById(id.toolbar);
         setSupportActionBar(toolbar);
 
         mNotaViewModel = ViewModelProviders.of(this).get(NotaViewModel.class);
+
 
 
 
