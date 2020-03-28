@@ -13,7 +13,7 @@ import intro.multiecras.miguel_barros_android.DB.Categorias.CategoriaDao;
 import intro.multiecras.miguel_barros_android.DB.Notas.Nota;
 import intro.multiecras.miguel_barros_android.DB.Notas.NotaDao;
 
-@Database(entities = {Nota.class, Categoria.class}, version = 1, exportSchema = false)
+@Database(entities = {Nota.class, Categoria.class}, version = 2, exportSchema = false)
 public abstract class NotaRoomDatabase extends RoomDatabase {
 
     public abstract NotaDao notaDao();
@@ -65,7 +65,7 @@ public abstract class NotaRoomDatabase extends RoomDatabase {
             //mDao.deleteAll();
             if(mDao.getAnyNota().length < 1){
                 for (int i = 0; i <= titulos.length - 1; i++) {
-                    Nota nota = new Nota(titulos[i],descricoes[i], cidades[i]);
+                    Nota nota = new Nota(titulos[i],descricoes[i], cidades[i],1);
                     mDao.insert(nota);
                 }
             }

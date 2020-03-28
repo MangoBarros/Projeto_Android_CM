@@ -81,7 +81,8 @@ public class FirstFragment extends Fragment {
                 //Toast.makeText(getContext(),"Click",Toast.LENGTH_LONG).show();
                 Intent editIntent = new Intent(getContext(),EditNotaActivity.class);
                 Nota nota = mAdapter.getNotaAtPosition(position);
-                String[] notaParams = {String.valueOf(nota.getId()), nota.getTitulo(),nota.getCidade(),nota.getDescricao()};
+                String[] notaParams = {String.valueOf(nota.getId()), nota.getTitulo(),nota.getDescricao(),nota.getCidade(),nota.getCategoria().toString()};
+                //id = 0, titulo = 1, descricao = 2, cidade = 3
                 editIntent.putExtra("notaParams",notaParams);
                 startActivityForResult(editIntent, EDIT_NOTA_ACTIVITY_REQUEST_CODE);
             }
@@ -128,15 +129,19 @@ public class FirstFragment extends Fragment {
             String titulo = nota[0];
             String cidade = nota[1];
             String descricao = nota[2];
+            Integer id = Integer.valueOf(nota[3]);
 
-            Nota notaFinal = new Nota(titulo,cidade,descricao);
+            Nota notaFinal = new Nota(titulo,cidade,descricao,id);
             mNotaViewModel.insert(notaFinal);
         } else if(requestCode == EDIT_NOTA_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
             String[] nota = data.getStringArrayExtra(EditNotaActivity.EXTRA_REPLY);
             Integer id = Integer.valueOf(nota[0]);
+            //id = 0, titulo = 1, descricao = 2, cidade = 3
             String titulo = nota[1];
-            String cidade = nota[2];
-            String descricao = nota[3];
+            String descricao = nota[2];
+            String cidade = nota[3];
+            Integer categoria = Integer.valueOf(nota[4]);
+
             Nota notaAntiga = null;
             try {
                 notaAntiga = mNotaViewModel.getNotaById(id);
@@ -148,12 +153,13 @@ public class FirstFragment extends Fragment {
             notaAntiga.setTitulo(titulo);
             notaAntiga.setCidade(cidade);
             notaAntiga.setmDescricao(descricao);
+            notaAntiga.setCategoria(categoria);
 
             mNotaViewModel.update(notaAntiga);
             Toast.makeText(getContext(),"Nota atualizada",Toast.LENGTH_LONG).show();
 
 
-        } else if(requestCode == EDIT_NOTA_ACTIVITY_REQUEST_CODE && resultCode == RESULT_FIRST_USER){
+        } else if(resultCode == RESULT_FIRST_USER){
             System.out.println("voltou");
         } else {
             Toast.makeText(

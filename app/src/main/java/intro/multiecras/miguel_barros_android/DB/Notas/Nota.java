@@ -1,5 +1,7 @@
 package intro.multiecras.miguel_barros_android.DB.Notas;
 
+import com.google.android.material.shape.MaterialShapeDrawable;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -27,10 +29,16 @@ public class Nota {
     @ColumnInfo(name = "cidade")
     private String mCidade;
 
-    public Nota(@NonNull String titulo, @NonNull String descricao, @NonNull String cidade){
+
+    @NonNull
+    @ColumnInfo(name = "Categoria")
+    private int mCategoria;
+
+    public Nota(@NonNull String titulo, @NonNull String descricao, @NonNull String cidade, @NonNull int categoria){
         this.mTitulo = titulo;
         this.mDescricao = descricao;
         this.mCidade= cidade;
+        this.mCategoria = categoria;
 
     }
 
@@ -49,6 +57,10 @@ public class Nota {
         return this.mCidade;
     }
 
+    @NonNull
+    public Integer getCategoria(){
+        return this.mCategoria;
+    }
 
     public int getId(){
         return this.id;
@@ -62,6 +74,10 @@ public class Nota {
     }
     public void setmDescricao(String Descricao){
         this.mDescricao= Descricao;
+    }
+
+    public void setCategoria(Integer categoria){
+        this.mCategoria=categoria;
     }
 
     public void setId(int id){

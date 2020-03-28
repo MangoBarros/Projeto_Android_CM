@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import intro.multiecras.miguel_barros_android.DB.Notas.Nota;
@@ -17,6 +18,7 @@ public class NotaListAdapter extends RecyclerView.Adapter<NotaListAdapter.NotaVi
     private final LayoutInflater mInflater;
     private List<Nota> mNotas;
     private static ClickListener clickListener;
+
 
     NotaListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -35,6 +37,24 @@ public class NotaListAdapter extends RecyclerView.Adapter<NotaListAdapter.NotaVi
             holder.NotaItemView.setText(current.getTitulo());
             holder.NotaDescView.setText(current.getDescricao());
             holder.NotaCidadeView.setText(current.getCidade());
+            // A P F T U
+            switch (current.getCategoria()){
+                case 0:
+                    holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.AutomovelC));
+                    break;
+                case 1:
+                    holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.PessoalC));
+                    break;
+                case 2:
+                    holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.FazeresC));
+                    break;
+                case 3:
+                    holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.TrabalhoC));
+                    break;
+                case 4:
+                    holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.UrgenteC));
+                    break;
+            }
         } else {
             // Covers the case of data not being ready yet.
             holder.NotaItemView.setText("No Title");

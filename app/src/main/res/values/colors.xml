@@ -7,4 +7,14 @@
     <color name="colorTextPrimary">@android:color/white</color>
     <color name="colorScreenBackground">#fff3e0</color>
     <color name="colorTextHint">#E0E0E0</color>
+
+
+    <color name="AutomovelC">#0073A1</color>
+    <color name="PessoalC">#FF693C</color>
+    <color name="FazeresC">#A9A9E8</color>
+    <color name="TrabalhoC">#64b5f6</color>
+    <color name="UrgenteC">#FF0A00</color>
+
+
+
 </resources>

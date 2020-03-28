@@ -11,4 +11,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="empty_not_saved">Erro na Criação</string>
     <string name="delete_all_notes">Delete all Notes</string>
+
+
 </resources>
