@@ -39,8 +39,8 @@ public class EditNotaActivity extends AppCompatActivity implements AdapterView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_second);
-        String[] stuff = getIntent().getStringArrayExtra("notaParams");
-        SetParams(stuff);
+        String[] nota = getIntent().getStringArrayExtra("notaParams");
+        SetParams(nota);
 
         // A P F T U
         List<String> categorias = new ArrayList<String>();
