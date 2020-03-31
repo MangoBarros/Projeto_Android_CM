@@ -31,5 +31,12 @@
     <string name="english">Ingles</string>
     <string name="portugues">Portugues</string>
     <string name="language">Linguagem</string>
+    <string name="private_notes">Private Notes</string>
+    <string name="create_account">Create Account</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="make_your_notes">Make Your Notes!</string>
+    <string name="notas">notas</string>
 
 </resources>
