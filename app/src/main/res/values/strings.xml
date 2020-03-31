@@ -40,6 +40,8 @@
     <string name="password">Password</string>
     <string name="make_your_notes">Make Your Notes!</string>
     <string name="notas">notas</string>
+    <string name="email">Email</string>
+    <string name="sign_in">Sign in</string>
 
 
 </resources>
