@@ -10,40 +10,27 @@ import android.widget.Button;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button notas_privadasBtn;
-    private Button loginBtn;
-    private Button CreateAccountBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        notas_privadasBtn = findViewById(R.id.privateNotesBtn);
-        loginBtn = findViewById(R.id.loginBtn);
-        CreateAccountBtn = findViewById(R.id.createAccountBtn);
 
-        notas_privadasBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
-            }
-        });
+    }
 
-        CreateAccountBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),NewAccountActivity.class);
-                startActivity(intent);
-            }
-        });
+    public void notasPrivate(View view) {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+    }
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Make Login
-            }
-        });
+    public void createAccount(View view) {
+        Intent intent = new Intent(getApplicationContext(),NewAccountActivity.class);
+        startActivity(intent);
+    }
+
+    public void login(View view) {
+
     }
 }
