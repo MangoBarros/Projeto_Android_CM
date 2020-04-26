@@ -1,12 +1,14 @@
-package intro.multiecras.miguel_barros_android;
+package intro.multiecras.miguel_barros_android.Account;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+
+import intro.multiecras.miguel_barros_android.Offline.MainActivity;
+import intro.multiecras.miguel_barros_android.Mapas.MapaActivity;
+import intro.multiecras.miguel_barros_android.R;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -21,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void notasPrivate(View view) {
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
 
@@ -31,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        Intent intent = new Intent(getApplicationContext(),MapaActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MapaActivity.class);
         startActivity(intent);
     }
 }

@@ -1,4 +1,4 @@
-package intro.multiecras.miguel_barros_android;
+package intro.multiecras.miguel_barros_android.Offline;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,9 +9,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import intro.multiecras.miguel_barros_android.DB.Notas.Nota;
+import intro.multiecras.miguel_barros_android.R;
 
 
 public class NotaListAdapter extends RecyclerView.Adapter<NotaListAdapter.NotaViewHolder>  {

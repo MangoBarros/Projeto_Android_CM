@@ -1,4 +1,4 @@
-package intro.multiecras.miguel_barros_android;
+package intro.multiecras.miguel_barros_android.Offline;
 
 import android.app.Application;
 import android.os.AsyncTask;

@@ -1,8 +1,9 @@
-package intro.multiecras.miguel_barros_android;
+package intro.multiecras.miguel_barros_android.Offline;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.fragment.NavHostFragment;
 import intro.multiecras.miguel_barros_android.DB.Notas.Nota;
+import intro.multiecras.miguel_barros_android.R;
 
 import android.content.Intent;
 import android.os.Bundle;

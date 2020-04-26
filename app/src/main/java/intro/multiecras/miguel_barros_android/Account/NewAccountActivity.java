@@ -1,10 +1,12 @@
-package intro.multiecras.miguel_barros_android;
+package intro.multiecras.miguel_barros_android.Account;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import intro.multiecras.miguel_barros_android.R;
 
 public class NewAccountActivity extends AppCompatActivity {
 

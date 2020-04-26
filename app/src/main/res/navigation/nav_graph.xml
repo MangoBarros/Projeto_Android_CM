@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="intro.multiecras.miguel_barros_android.FirstFragment"
+        android:name="intro.multiecras.miguel_barros_android.Offline.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
 
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="intro.multiecras.miguel_barros_android.SecondFragment"
+        android:name="intro.multiecras.miguel_barros_android.Offline.SecondFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
 
