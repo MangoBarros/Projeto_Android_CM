@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -35,6 +37,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import intro.multiecras.miguel_barros_android.Offline.MainActivity;
 import intro.multiecras.miguel_barros_android.R;
 
 
@@ -107,10 +110,13 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
             case R.id.createNota:
+
                 fusedLocationClient.getLastLocation().addOnSuccessListener( new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
                         if(location !=null){
+
+                            /*
                             String snippet = String.format(Locale.getDefault(),
                                     "Lat: %1$.5f, Long: %2$.5f",
                                     location.getLatitude(),
@@ -119,15 +125,20 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                             Marker marker = mMap.addMarker(new MarkerOptions()
                                             .position(new LatLng(location.getLatitude(), location.getLongitude()))
                                             .title("hello")
-                                    /*.snippet(snippet)*/);
+                                    );
 
 
                             markers.add(marker);
                             mostraTodosMarkers();
+                            */
+                            makeNota(new LatLng(location.getLatitude(),location.getLongitude()));
 
                         }
                     }
                 });
+
+
+
                 Toast.makeText(this,"Nota criada",Toast.LENGTH_SHORT).show();
                 return true;
 
@@ -155,6 +166,11 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             }
         });
+    }
+
+    public void makeNota(LatLng latLng) {
+        Intent intent = new Intent(getApplicationContext(), MakeNota.class);
+        startActivity(intent);
     }
 
     private void setPoiClick(final GoogleMap map) {
