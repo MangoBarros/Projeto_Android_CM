@@ -49,12 +49,12 @@
                     android:text="@string/login"
                     android:onClick="login"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/usernameIn"
-                    app:layout_constraintStart_toStartOf="@+id/usernameIn"
-                    app:layout_constraintTop_toBottomOf="@+id/usernameIn" />
+                    app:layout_constraintEnd_toEndOf="@+id/emailIn"
+                    app:layout_constraintStart_toStartOf="@+id/emailIn"
+                    app:layout_constraintTop_toBottomOf="@+id/emailIn" />
 
             <EditText
-                    android:id="@+id/usernameIn"
+                    android:id="@+id/emailIn"
                     android:layout_width="227dp"
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"

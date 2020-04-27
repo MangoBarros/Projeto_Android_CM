@@ -1,20 +1,16 @@
 package intro.multiecras.miguel_barros_android.Account;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
 import intro.multiecras.miguel_barros_android.API.GetData;
-import intro.multiecras.miguel_barros_android.API.Nota;
 import intro.multiecras.miguel_barros_android.API.RetrofitClientInstance;
 import intro.multiecras.miguel_barros_android.API.User;
 import intro.multiecras.miguel_barros_android.Offline.MainActivity;
@@ -24,14 +20,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity{
 
     public static final String SHARED_PREFS = "token";
+    private TextView mail;
+    private TextView password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mail = findViewById(R.id.emailIn);
+        password = findViewById(R.id.passwordIn);
 
 
     }
@@ -47,21 +48,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
+        User user = new User(mail.getText().toString(),password.getText().toString());
         GetData service = RetrofitClientInstance.getRetrofitInstance().create(GetData.class);
-        Call<User> call = service.postLogin(new User("mail@mail","password"));
+        Call<User> call = service.postLogin(user);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 assert response.body() != null;
-                String token = String.valueOf(response.body());
+                //String token = String.valueOf(response.body());
+                User user = response.body();
                 SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("token", token);
+                editor.putString("token", user.getApi_token());
                 editor.apply();
 
-
-
-                Log.i("test",sharedPreferences.getString("token",""));
 
                 Intent intent = new Intent(getApplicationContext(), MapaActivity.class);
                 startActivity(intent);
@@ -74,4 +74,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+
 }

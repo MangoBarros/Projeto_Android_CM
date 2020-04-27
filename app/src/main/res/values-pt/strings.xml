@@ -50,4 +50,6 @@
     <string name="terrain_map">terrain_map</string>
     <string name="mapa">Mapa</string>
     <string name="criar_nota">Criar Nota</string>
+    <string name="guardar">guardar</string>
+    <string name="mail">example@mail.com</string>
 </resources>

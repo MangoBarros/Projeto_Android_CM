@@ -3,6 +3,7 @@ package intro.multiecras.miguel_barros_android.Mapas;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static intro.multiecras.miguel_barros_android.Account.LoginActivity.SHARED_PREFS;
+
 public class MakeNota extends AppCompatActivity {
 
     @Override
@@ -30,7 +33,8 @@ public class MakeNota extends AppCompatActivity {
 
     public void createNota(View view) {
         GetData service = RetrofitClientInstance.getRetrofitInstance().create(GetData.class);
-        Call<List<Nota>> call = service.getAllNotas("");
+         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        Call<List<Nota>> call = service.getAllNotas(sharedPreferences.getString("token",""));
         call.enqueue(new Callback<List<Nota>>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override

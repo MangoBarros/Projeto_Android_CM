@@ -15,12 +15,19 @@ public class User {
     @Expose
     private String name;
 
+    @SerializedName("api_token")
+    @Expose
+    private String api_token;
+
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
+    public String getApi_token(){
+        return  api_token;
+    }
     public String getEmail() {
         return email;
     }
