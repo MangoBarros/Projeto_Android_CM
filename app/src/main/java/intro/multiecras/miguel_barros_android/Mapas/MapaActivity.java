@@ -35,17 +35,26 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
+import intro.multiecras.miguel_barros_android.API.GetData;
+import intro.multiecras.miguel_barros_android.API.Nota;
+import intro.multiecras.miguel_barros_android.API.RetrofitClientInstance;
 import intro.multiecras.miguel_barros_android.Offline.MainActivity;
 import intro.multiecras.miguel_barros_android.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static intro.multiecras.miguel_barros_android.Account.LoginActivity.SHARED_PREFS;
 
 
 public class MapaActivity extends AppCompatActivity implements OnMapReadyCallback , GoogleMap.OnMarkerClickListener {
 
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private GoogleMap mMap;
-    ArrayList<Marker> markers = new ArrayList<Marker>();
+    private List<Nota> lista;
     private FusedLocationProviderClient fusedLocationClient;
 
 
@@ -82,6 +91,10 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         mMap.setOnMarkerClickListener(this);
         enableMyLocation();
+
+        getAllNotas();
+
+
     }
 
     @Override
@@ -107,32 +120,12 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.terrain_map:
                 mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
                 return true;
-
-
             case R.id.createNota:
-
                 fusedLocationClient.getLastLocation().addOnSuccessListener( new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
                         if(location !=null){
-
-                            /*
-                            String snippet = String.format(Locale.getDefault(),
-                                    "Lat: %1$.5f, Long: %2$.5f",
-                                    location.getLatitude(),
-                                    location.getLongitude());
-
-                            Marker marker = mMap.addMarker(new MarkerOptions()
-                                            .position(new LatLng(location.getLatitude(), location.getLongitude()))
-                                            .title("hello")
-                                    );
-
-
-                            markers.add(marker);
-                            mostraTodosMarkers();
-                            */
                             makeNota(new LatLng(location.getLatitude(),location.getLongitude()));
-
                         }
                     }
                 });
@@ -150,19 +143,8 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
-                String snippet = String.format(Locale.getDefault(),
-                        "Lat: %1$.5f, Long: %2$.5f",
-                        latLng.latitude,
-                        latLng.longitude);
+                makeNota(latLng);
 
-                Marker marker = mMap.addMarker(new MarkerOptions()
-                                .position(latLng)
-                                .title("hello")
-                        /*.snippet(snippet)*/);
-
-
-                markers.add(marker);
-                mostraTodosMarkers();
 
             }
         });
@@ -170,6 +152,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void makeNota(LatLng latLng) {
         Intent intent = new Intent(getApplicationContext(), MakeNota.class);
+        intent.putExtra("coordenates", String.valueOf(latLng.latitude)+","+String.valueOf(latLng.longitude));
         startActivity(intent);
     }
 
@@ -188,18 +171,69 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    void mostraTodosMarkers(){
-        for (Marker m: markers) {
+    private void getAllNotas() {
+        GetData service = RetrofitClientInstance.getRetrofitInstance().create(GetData.class);
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        Call<List<Nota>> call = service.getAllNotas(sharedPreferences.getString("token", ""));
+        call.enqueue(new Callback<List<Nota>>() {
+            @Override
+            public void onResponse(Call<List<Nota>> call, Response<List<Nota>> response) {
+                if(response.body() != null){
+                    lista = response.body();
+                    fillNotasInMap(lista);
+                }else {
+                    Toast.makeText(getApplicationContext(),"Não Existem Notas De momento", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Nota>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Não Existem Notas De momento", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+    private void fillNotasInMap(List<Nota> lista){
+
+        for (Nota n : lista) {
+
+            String str = n.getCoordenates();
+            String[] arrOfStr = str.split(",");
+            Double latitude = Double.valueOf(arrOfStr[0]);
+            Double longitude= Double.valueOf(arrOfStr[1]);
+
+            LatLng latLng = new LatLng(latitude,longitude);
+
+            String snippet = String.format(Locale.getDefault(),
+                    "Lat: %1$.5f, Long: %2$.5f",
+                    latitude,
+                    longitude);
+
+            Marker marker = mMap.addMarker(new MarkerOptions()
+                            .position(latLng)
+                            .title(n.getTitulo())
+                            .snippet(snippet));
 
         }
+
     }
+
+
+
+
 
     private void setInfoWindowClickToPanorama(GoogleMap map) {
         map.setOnInfoWindowClickListener(
                 new GoogleMap.OnInfoWindowClickListener() {
                     @Override
                     public void onInfoWindowClick(Marker marker) {
-                        Log.i("windowClick", "clicou dqwqw ");
+                        Intent i = new Intent(getApplicationContext(),SeeNota.class);
+                        i.putExtra("id",marker.getSnippet());
+                        startActivity(i);
+
                     }
                 });
     }

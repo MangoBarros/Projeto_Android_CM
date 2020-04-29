@@ -33,8 +33,6 @@ public class LoginActivity extends AppCompatActivity{
 
         mail = findViewById(R.id.emailIn);
         password = findViewById(R.id.passwordIn);
-
-
     }
 
     public void notasPrivate(View view) {
@@ -60,8 +58,8 @@ public class LoginActivity extends AppCompatActivity{
                 SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("token", user.getApi_token());
+                editor.putInt("id", user.getId());
                 editor.apply();
-
 
                 Intent intent = new Intent(getApplicationContext(), MapaActivity.class);
                 startActivity(intent);

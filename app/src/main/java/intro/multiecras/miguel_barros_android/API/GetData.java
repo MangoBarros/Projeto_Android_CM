@@ -28,7 +28,6 @@ public interface GetData {
                     String token,
             @Body()
                 Nota nota
-
     );
 
     @POST("notas")

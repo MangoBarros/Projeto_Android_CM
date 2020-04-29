@@ -40,6 +40,7 @@ public class Nota {
         this.categoria = categoria;
         this.descricao = descricao;
         this.foto = foto;
+        this.coordenates = coordenates;
     }
 
 
@@ -103,16 +104,10 @@ public class Nota {
         return createdAt;
     }
 
-    public void setCreatedAt(Object createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Object getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Object updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+
 
 }

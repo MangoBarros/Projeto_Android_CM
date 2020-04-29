@@ -8,6 +8,11 @@ public class User {
     @SerializedName("email")
     @Expose
     private String email;
+
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+
     @SerializedName("password")
     @Expose
     private String password;
@@ -30,6 +35,10 @@ public class User {
     }
     public String getEmail() {
         return email;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public void setEmail(String email) {
