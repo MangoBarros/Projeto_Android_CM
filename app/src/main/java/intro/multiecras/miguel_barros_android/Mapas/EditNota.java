@@ -2,6 +2,8 @@ package intro.multiecras.miguel_barros_android.Mapas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -9,12 +11,20 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import intro.multiecras.miguel_barros_android.API.GetData;
 import intro.multiecras.miguel_barros_android.API.Nota;
+import intro.multiecras.miguel_barros_android.API.RetrofitClientInstance;
 import intro.multiecras.miguel_barros_android.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static intro.multiecras.miguel_barros_android.Account.LoginActivity.SHARED_PREFS;
 
 public class EditNota extends AppCompatActivity   implements AdapterView.OnItemSelectedListener{
 
@@ -27,6 +37,9 @@ public class EditNota extends AppCompatActivity   implements AdapterView.OnItemS
     private Integer selected = 1;
     private Integer old;
 
+
+    Nota nota;
+
     private Button voltar;
     private Button guardar;
 
@@ -34,6 +47,10 @@ public class EditNota extends AppCompatActivity   implements AdapterView.OnItemS
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_nota);
+        Intent i = getIntent();
+        id = i.getIntExtra("id", -1);
+
+        getNota(id);
     }
 
     public void SetParams(Nota nota){
@@ -52,7 +69,7 @@ public class EditNota extends AppCompatActivity   implements AdapterView.OnItemS
         //NotaCidadeView.setText(nota.getFoto());
 
         id = nota.getId();
-        old =nota.getId();
+        old=nota.getId();
 
         // A P F T U
         List<String> categorias = new ArrayList<String>();
@@ -78,6 +95,38 @@ public class EditNota extends AppCompatActivity   implements AdapterView.OnItemS
             }
         });
 
+    }
+
+    private void getNota(Integer id) {
+        GetData service = RetrofitClientInstance.getRetrofitInstance().create(GetData.class);
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        Call<Nota> call = service.getNota(id,sharedPreferences.getString("token", ""));
+        call.enqueue(new Callback<Nota>() {
+
+            @Override
+            public void onResponse(Call<Nota> call, Response<Nota> response) {
+                if(response.body() != null){
+                    nota = new Nota(
+                            response.body().getUserId(),
+                            response.body().getCategoria(),
+                            response.body().getTitulo(),
+                            response.body().getDescricao(),
+                            response.body().getFoto(),
+                            response.body().getCoordenates()
+                    );
+
+                }else {
+                    Toast.makeText(getApplicationContext(),"Esta Nota não Está disponivel", Toast.LENGTH_SHORT);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Nota> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Esta Nota não Está disponivel", Toast.LENGTH_SHORT);
+                //finish();
+            }
+        });
     }
 
     @Override

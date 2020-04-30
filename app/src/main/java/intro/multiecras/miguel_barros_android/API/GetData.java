@@ -7,6 +7,8 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface GetData {
 
@@ -18,6 +20,8 @@ public interface GetData {
 
     @GET("notas/{id}")
     Call<Nota> getNota(
+            @Path("id")
+                Integer id,
             @Header("Authorization")
                     String token
     );

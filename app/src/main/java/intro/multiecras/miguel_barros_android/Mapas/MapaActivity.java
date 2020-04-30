@@ -35,6 +35,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,6 +56,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private GoogleMap mMap;
     private List<Nota> lista;
+    private HashMap<Marker, Integer> marcadores = new HashMap<Marker, Integer>();
     private FusedLocationProviderClient fusedLocationClient;
 
 
@@ -197,7 +199,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     private void fillNotasInMap(List<Nota> lista){
-
+        marcadores.clear();
         for (Nota n : lista) {
 
             String str = n.getCoordenates();
@@ -207,15 +209,15 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             LatLng latLng = new LatLng(latitude,longitude);
 
-            String snippet = String.format(Locale.getDefault(),
-                    "Lat: %1$.5f, Long: %2$.5f",
-                    latitude,
-                    longitude);
+
 
             Marker marker = mMap.addMarker(new MarkerOptions()
+
                             .position(latLng)
-                            .title(n.getTitulo())
-                            .snippet(snippet));
+                            .title(n.getTitulo()));
+
+            marcadores.put(marker, n.getId());
+
 
         }
 
@@ -230,8 +232,9 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 new GoogleMap.OnInfoWindowClickListener() {
                     @Override
                     public void onInfoWindowClick(Marker marker) {
+
                         Intent i = new Intent(getApplicationContext(),SeeNota.class);
-                        i.putExtra("id",marker.getSnippet());
+                        i.putExtra("id",marcadores.get(marker));
                         startActivity(i);
 
                     }
