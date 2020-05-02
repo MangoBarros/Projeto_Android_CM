@@ -87,7 +87,7 @@ public class SeeNota extends AppCompatActivity {
             @Override
             public void onFailure(Call<Nota> call, Throwable t) {
                 Toast.makeText(getApplicationContext(),"Esta Nota não Está disponivel", Toast.LENGTH_SHORT);
-                //finish();
+                finish();
             }
         });
     }
@@ -95,7 +95,9 @@ public class SeeNota extends AppCompatActivity {
     public void editNota(View view) {
 
         Intent i = new Intent(getApplicationContext(),EditNota.class);
-        i.putExtra("id", nota.getId());
+
+        i.putExtra("id", id);
+
         startActivity(i);
     }
 }

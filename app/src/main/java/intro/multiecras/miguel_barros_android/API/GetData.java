@@ -34,8 +34,10 @@ public interface GetData {
                 Nota nota
     );
 
-    @POST("notas")
+    @POST("notas/{id}")
     Call<Nota> updateNota(
+            @Path("id")
+                    Integer id,
             @Header("Authorization")
                     String token,
             @Body()

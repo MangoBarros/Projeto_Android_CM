@@ -52,4 +52,5 @@
     <string name="criar_nota">Criar Nota</string>
     <string name="guardar">guardar</string>
     <string name="mail">example@mail.com</string>
+    <string name="editar">Editar</string>
 </resources>

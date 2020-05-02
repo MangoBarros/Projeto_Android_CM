@@ -139,4 +139,43 @@ public class EditNota extends AppCompatActivity   implements AdapterView.OnItemS
         this.selected = old;
 
     }
+
+    public void editNota(View view) {
+
+        GetData service = RetrofitClientInstance.getRetrofitInstance().create(GetData.class);
+        Nota updateNota = new Nota(1,"categoria","New tittle", "descr", "pick",nota.getCoordenates());
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        Call<Nota> call = service.updateNota(id,sharedPreferences.getString("token", ""),updateNota);
+        call.enqueue(new Callback<Nota>() {
+
+            @Override
+            public void onResponse(Call<Nota> call, Response<Nota> response) {
+                if(response.body() != null){
+                    try {
+                        nota = new Nota(
+                                response.body().getUserId(),
+                                response.body().getCategoria(),
+                                response.body().getTitulo(),
+                                response.body().getDescricao(),
+                                response.body().getFoto(),
+                                response.body().getCoordenates()
+                        );
+                    }catch (Exception e){
+                        Toast.makeText(getApplicationContext(),"Alguma coisa correu mal, tente novamente", Toast.LENGTH_SHORT);
+                    }
+
+
+                }else {
+                    Toast.makeText(getApplicationContext(),"Alguma coisa correu mal, tente novamente", Toast.LENGTH_SHORT);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Nota> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Alguma coisa correu mal, tente novamente", Toast.LENGTH_SHORT);
+                //finish();
+            }
+        });
+
+    }
 }
