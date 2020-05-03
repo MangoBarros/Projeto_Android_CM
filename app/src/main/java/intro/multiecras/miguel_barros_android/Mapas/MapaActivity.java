@@ -27,6 +27,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -56,11 +57,17 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private GoogleMap mMap;
     private List<Nota> lista;
-    private HashMap<Marker, Integer> marcadores = new HashMap<Marker, Integer>();
+    private HashMap<Marker, Nota> marcadores = new HashMap<Marker, Nota>();
     private FusedLocationProviderClient fusedLocationClient;
 
+    LatLng home;
+    float zoom=17;
 
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        this.recreate();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,22 +86,27 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        float zoom =20;
-        // Add a marker in Sydney and move the camera
-        LatLng home = new LatLng(41.715840, -8.762170);
-        Marker marker = mMap.addMarker(new MarkerOptions().position(home).title("Marker in home"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(home, zoom));
-
-        marker.showInfoWindow();
 
         setMapLongClick(mMap);
-        setPoiClick(mMap);
         setInfoWindowClickToPanorama(mMap);
+
 
         mMap.setOnMarkerClickListener(this);
         enableMyLocation();
 
         getAllNotas();
+
+        fusedLocationClient.getLastLocation().addOnSuccessListener( new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if(location !=null){
+                    home = new LatLng(location.getLatitude(),location.getLongitude());
+                    //Marker marker = mMap.addMarker(new MarkerOptions().position(home).title("Your Position").icon(BitmapDescriptorFactory.defaultMarker(200)));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(home, zoom));
+                    //marker.showInfoWindow();
+                }
+            }
+        });
 
 
     }
@@ -158,19 +170,7 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         startActivity(intent);
     }
 
-    private void setPoiClick(final GoogleMap map) {
-        Log.i("wow", "clicou no mapa");
 
-        map.setOnPoiClickListener(new GoogleMap.OnPoiClickListener() {
-            @Override
-            public void onPoiClick(PointOfInterest pointOfInterest) {
-                Log.i("wowdwq", "clicou dqwqw ");
-                Marker poiMarker = mMap.addMarker(new MarkerOptions().position(pointOfInterest.latLng).title(pointOfInterest.name));
-                poiMarker.showInfoWindow();
-                poiMarker.setTag("poi");
-            }
-        });
-    }
 
 
     private void getAllNotas() {
@@ -208,19 +208,22 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             Double longitude= Double.valueOf(arrOfStr[1]);
 
             LatLng latLng = new LatLng(latitude,longitude);
-
-
-
-            Marker marker = mMap.addMarker(new MarkerOptions()
-
-                            .position(latLng)
-                            .title(n.getTitulo()));
-
-            marcadores.put(marker, n.getId());
-
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+            Integer id = sharedPreferences.getInt("id", -1);
+            if(id == n.getUserId()){
+                Marker marker = mMap.addMarker(new MarkerOptions()
+                        .position(latLng)
+                        .title(n.getTitulo())
+                        .icon(BitmapDescriptorFactory.defaultMarker(100)));
+                marcadores.put(marker, n);
+            }else {
+                Marker marker = mMap.addMarker(new MarkerOptions()
+                        .position(latLng)
+                        .title(n.getTitulo()));
+                marcadores.put(marker, n);
+            }
 
         }
-
     }
 
 
@@ -232,9 +235,11 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 new GoogleMap.OnInfoWindowClickListener() {
                     @Override
                     public void onInfoWindowClick(Marker marker) {
-
+                        if(marker.getTitle() == "Your Position"){
+                            Toast.makeText(getApplicationContext(), "Este Marcador apenas indica a sua posição", Toast.LENGTH_SHORT).show();
+                        }
                         Intent i = new Intent(getApplicationContext(),SeeNota.class);
-                        i.putExtra("id",marcadores.get(marker));
+                        i.putExtra("id",marcadores.get(marker).getId());
                         startActivity(i);
 
                     }
@@ -271,8 +276,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-
-
 
         return false;
     }

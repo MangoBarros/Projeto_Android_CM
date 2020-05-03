@@ -24,14 +24,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
-            android:layout_marginBottom="304dp"
-            android:text="Editar"
+            android:layout_marginBottom="300dp"
             android:onClick="editNota"
+            android:text="Editar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.52"
+            app:layout_constraintHorizontal_bias="0.533"
+            app:layout_constraintStart_toEndOf="@+id/btn_voltar"
+            app:layout_constraintTop_toBottomOf="@+id/Categoria"
+            app:layout_constraintVertical_bias="0.35000002" />
+
+    <Button
+            android:id="@+id/btn_voltar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="70dp"
+            android:text="@string/delete"
+            android:onClick="deleteNota"
+            app:layout_constraintBottom_toBottomOf="@+id/editNota"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Categoria" />
+            app:layout_constraintTop_toTopOf="@+id/editNota" />
 
     <TextView
             android:id="@+id/descricao"

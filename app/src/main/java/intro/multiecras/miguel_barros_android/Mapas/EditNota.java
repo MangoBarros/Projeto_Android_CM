@@ -160,6 +160,8 @@ public class EditNota extends AppCompatActivity   implements AdapterView.OnItemS
                                 response.body().getFoto(),
                                 response.body().getCoordenates()
                         );
+                        finish();
+                        Toast.makeText(getApplicationContext(),"Nota editada com sucesso", Toast.LENGTH_SHORT);
                     }catch (Exception e){
                         Toast.makeText(getApplicationContext(),"Alguma coisa correu mal, tente novamente", Toast.LENGTH_SHORT);
                     }

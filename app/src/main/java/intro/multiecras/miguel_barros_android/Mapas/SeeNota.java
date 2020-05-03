@@ -2,6 +2,7 @@ package intro.multiecras.miguel_barros_android.Mapas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import intro.multiecras.miguel_barros_android.API.GetData;
 import intro.multiecras.miguel_barros_android.API.Nota;
 import intro.multiecras.miguel_barros_android.API.RetrofitClientInstance;
 import intro.multiecras.miguel_barros_android.R;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,6 +36,8 @@ public class SeeNota extends AppCompatActivity {
     TextView titulo;
     TextView categoria;
     TextView descricao;
+    SharedPreferences sharedPreferences;
+    Integer user_id ;
 
 
     @Override
@@ -43,7 +47,8 @@ public class SeeNota extends AppCompatActivity {
 
         Intent i = getIntent();
         id = i.getIntExtra("id", -1);
-
+        sharedPreferences = sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        user_id = sharedPreferences.getInt("id", -1);
         getNota(id);
     }
 
@@ -94,10 +99,43 @@ public class SeeNota extends AppCompatActivity {
 
     public void editNota(View view) {
 
-        Intent i = new Intent(getApplicationContext(),EditNota.class);
+        if(user_id == nota.getUserId()) {
 
-        i.putExtra("id", id);
+            Intent i = new Intent(getApplicationContext(), EditNota.class);
 
-        startActivity(i);
+            i.putExtra("id", id);
+
+            startActivity(i);
+        }else {
+            Toast.makeText(getApplicationContext(),"Só pode editar as suas notas",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void deleteNota(View view) {
+
+        if(user_id == nota.getUserId()){
+            GetData service = RetrofitClientInstance.getRetrofitInstance().create(GetData.class);
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+            Call<ResponseBody> call = service.deleteNota(id,sharedPreferences.getString("token", ""));
+            call.enqueue(new Callback<ResponseBody>() {
+
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                    Toast.makeText(getApplicationContext(),"Nota Apagada com sucesso", Toast.LENGTH_SHORT).show();
+                    finish();
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(),"Esta Nota não Está disponivel", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            });
+        } else {
+             Toast.makeText(getApplicationContext(),"Só pode eliminar as suas notas",Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

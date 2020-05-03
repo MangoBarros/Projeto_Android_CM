@@ -53,6 +53,7 @@
     <string name="guardar">guardar</string>
     <string name="mail">example@mail.com</string>
     <string name="editar">Editar</string>
+    <string name="delete">Delete</string>
 
 
 </resources>
