@@ -87,14 +87,14 @@ public class SeeNota extends AppCompatActivity {
                     );
                     fillNota(nota);
                 }else {
-                    Toast.makeText(getApplicationContext(),"Esta Nota não Está disponivel", Toast.LENGTH_SHORT);
+                    Toast.makeText(getApplicationContext(), R.string.notDisponivel, Toast.LENGTH_SHORT);
                     finish();
                 }
             }
 
             @Override
             public void onFailure(Call<Nota> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Esta Nota não Está disponivel", Toast.LENGTH_SHORT);
+                Toast.makeText(getApplicationContext(), R.string.notDisponivel, Toast.LENGTH_SHORT);
                 finish();
             }
         });
@@ -110,7 +110,7 @@ public class SeeNota extends AppCompatActivity {
 
             startActivity(i);
         }else {
-            Toast.makeText(getApplicationContext(),"Só pode editar as suas notas",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.onlyYoursEdit,Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -125,19 +125,19 @@ public class SeeNota extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                    Toast.makeText(getApplicationContext(),"Nota Apagada com sucesso", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.SuccessDelete, Toast.LENGTH_SHORT).show();
                     finish();
 
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(),"Esta Nota não Está disponivel", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),R.string.notDisponivel, Toast.LENGTH_SHORT).show();
                     finish();
                 }
             });
         } else {
-             Toast.makeText(getApplicationContext(),"Só pode eliminar as suas notas",Toast.LENGTH_SHORT).show();
+             Toast.makeText(getApplicationContext(), R.string.onlyYoursDelete,Toast.LENGTH_SHORT).show();
         }
 
     }

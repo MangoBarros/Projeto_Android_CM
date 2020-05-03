@@ -39,7 +39,6 @@ public class MakeNota extends AppCompatActivity {
         setContentView(R.layout.activity_make_nota);
         Intent i = getIntent();
         coordenates = i.getStringExtra("coordenates");
-        Log.i("tag", coordenates);
         NotaItemView = findViewById(R.id.input_title);
         NotaDescView = findViewById(R.id.input_desc);
 
@@ -53,12 +52,6 @@ public class MakeNota extends AppCompatActivity {
             SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
             Nota nota = new Nota(sharedPreferences.getInt("id", 0),"emergency",NotaItemView.getText().toString(), NotaDescView.getText().toString(),"wow.png", coordenates);
             Call<Nota> call = service.createNota(sharedPreferences.getString("token",""), nota);
-            Log.i("tag", nota.getTitulo());
-            Log.i("tag", nota.getCategoria());
-            Log.i("tag", nota.getCoordenates());
-            Log.i("tag", nota.getFoto());
-            Log.i("tag", nota.getUserId().toString());
-            Log.i("tag", String.valueOf(nota.getId()));
             call.enqueue(new Callback<Nota>() {
 
                 @Override
@@ -71,7 +64,7 @@ public class MakeNota extends AppCompatActivity {
 
                     }else{
                         Log.i("tag", "not created nota");
-                        Toast.makeText(getApplicationContext(), "Algo correu mal tente novamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.badHappen, Toast.LENGTH_SHORT).show();
                     }
                 }
 

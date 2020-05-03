@@ -69,14 +69,14 @@ public class EditNota extends AppCompatActivity {
                     NotaItemView.setText(nota.getTitulo());
                     NotaDescView.setText(nota.getDescricao());
                 }else {
-                    Toast.makeText(getApplicationContext(),"Esta Nota não Está disponivel", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.notDisponivel, Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
 
             @Override
             public void onFailure(Call<Nota> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Esta Nota não Está disponivel", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),R.string.notDisponivel, Toast.LENGTH_SHORT).show();
                 //finish();
             }
         });
@@ -102,20 +102,20 @@ public class EditNota extends AppCompatActivity {
                                     response.body().getCoordenates()
                             );
                             finish();
-                            Toast.makeText(getApplicationContext(), "Nota editada com sucesso", Toast.LENGTH_SHORT);
+                            Toast.makeText(getApplicationContext(), R.string.editSuccess, Toast.LENGTH_SHORT);
                         } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(), "Alguma coisa correu mal, tente novamente", Toast.LENGTH_SHORT);
+                            Toast.makeText(getApplicationContext(), R.string.badHappen, Toast.LENGTH_SHORT);
                         }
 
 
                     } else {
-                        Toast.makeText(getApplicationContext(), "Alguma coisa correu mal, tente novamente", Toast.LENGTH_SHORT);
+                        Toast.makeText(getApplicationContext(), R.string.badHappen, Toast.LENGTH_SHORT);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Nota> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "Alguma coisa correu mal, tente novamente", Toast.LENGTH_SHORT);
+                    Toast.makeText(getApplicationContext(), R.string.badHappen, Toast.LENGTH_SHORT);
                     //finish();
                 }
             });

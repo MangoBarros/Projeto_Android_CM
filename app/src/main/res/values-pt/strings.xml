@@ -31,26 +31,35 @@
     <string name="english">Ingles</string>
     <string name="portugues">Portugues</string>
     <string name="language">Linguagem</string>
-    <string name="private_notes">Private Notes</string>
-    <string name="create_account">Create Account</string>
-    <string name="login">Login</string>
-    <string name="username">Username</string>
+    <string name="private_notes">Notas Privadas</string>
+    <string name="create_account">Criar Conta</string>
+    <string name="login">Iniciar Sessão</string>
+    <string name="username">Nome de Utilizador</string>
     <string name="password">Password</string>
     <string name="make_your_notes">Make Your Notes!</string>
     <string name="notas">notas</string>
     <string name="email">Email</string>
-    <string name="sign_in">Sign in</string>
+    <string name="sign_in">Iniciar Sessão</string>
 
 
-    <string name="title_activity_mapa">Map</string>
+    <string name="title_activity_mapa">Mapa</string>
     <string name="google_maps_key">AIzaSyBoktDgOBi4zFl9YL3WAyV7LQThTzPaDIs</string>
-    <string name="normal_map">normal_map</string>
-    <string name="hybrid_map">hybrid_map</string>
-    <string name="satellite_map">satellite_maps</string>
-    <string name="terrain_map">terrain_map</string>
+    <string name="normal_map">Mapa normal</string>
+    <string name="hybrid_map">Mapa hibrido</string>
+    <string name="satellite_map">Mapa Satelite</string>
+    <string name="terrain_map">Mapa terreno</string>
     <string name="mapa">Mapa</string>
     <string name="criar_nota">Criar Nota</string>
     <string name="guardar">guardar</string>
     <string name="mail">example@mail.com</string>
     <string name="editar">Editar</string>
+    <string name="editar">Editar</string>
+    <string name="delete">Apagar</string>
+    <string name="notDisponivel">Esta Nota não Está disponivel</string>
+    <string name="editSuccess">Nota editada com sucesso</string>
+    <string name="badHappen">Alguma coisa correu mal, tente novamente</string>
+    <string name="notDisponivel">This note is not available</string>
+    <string name="onlyYoursEdit">Só pode editar as suas notas</string>
+    <string name="onlyYoursDelete">Só pode eliminar as suas notas</string>
+    <string name="SuccessDelete">Nota Apagada com sucesso</string>
 </resources>

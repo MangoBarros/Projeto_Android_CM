@@ -107,8 +107,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
         });
-
-
     }
 
     @Override
@@ -158,8 +156,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onMapLongClick(LatLng latLng) {
                 makeNota(latLng);
-
-
             }
         });
     }
@@ -169,9 +165,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         intent.putExtra("coordenates", String.valueOf(latLng.latitude)+","+String.valueOf(latLng.longitude));
         startActivity(intent);
     }
-
-
-
 
     private void getAllNotas() {
         GetData service = RetrofitClientInstance.getRetrofitInstance().create(GetData.class);
@@ -196,7 +189,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
     }
-
 
     private void fillNotasInMap(List<Nota> lista){
         marcadores.clear();
@@ -226,10 +218,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-
-
-
-
     private void setInfoWindowClickToPanorama(GoogleMap map) {
         map.setOnInfoWindowClickListener(
                 new GoogleMap.OnInfoWindowClickListener() {
@@ -245,8 +233,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 });
     }
-
-
     private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -273,7 +259,6 @@ public class MapaActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
         }
     }
-
     @Override
     public boolean onMarkerClick(Marker marker) {
 
