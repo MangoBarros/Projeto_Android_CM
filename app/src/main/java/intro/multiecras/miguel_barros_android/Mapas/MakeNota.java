@@ -28,8 +28,9 @@ import static intro.multiecras.miguel_barros_android.Account.LoginActivity.SHARE
 
 public class MakeNota extends AppCompatActivity {
 
-    private TextView mail;
-    private TextView  wow;
+
+    private TextView NotaItemView;
+    private TextView NotaDescView;
     private String coordenates;
 
     @Override
@@ -39,42 +40,48 @@ public class MakeNota extends AppCompatActivity {
         Intent i = getIntent();
         coordenates = i.getStringExtra("coordenates");
         Log.i("tag", coordenates);
+        NotaItemView = findViewById(R.id.input_title);
+        NotaDescView = findViewById(R.id.input_desc);
 
     }
 
+
+
     public void createNota(View view) {
-        GetData service = RetrofitClientInstance.getRetrofitInstance().create(GetData.class);
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        Nota nota = new Nota(sharedPreferences.getInt("id", 0),"emergency","Buraco", "Grande Descricao","wow.png", coordenates);
-        Call<Nota> call = service.createNota(sharedPreferences.getString("token",""), nota);
-        Log.i("tag", nota.getTitulo());
-        Log.i("tag", nota.getCategoria());
-        Log.i("tag", nota.getCoordenates());
-        Log.i("tag", nota.getFoto());
-        Log.i("tag", nota.getUserId().toString());
-        Log.i("tag", String.valueOf(nota.getId()));
-        call.enqueue(new Callback<Nota>() {
+        if (NotaItemView.length()>0 && NotaDescView.length() > 0){
+            GetData service = RetrofitClientInstance.getRetrofitInstance().create(GetData.class);
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+            Nota nota = new Nota(sharedPreferences.getInt("id", 0),"emergency",NotaItemView.getText().toString(), NotaDescView.getText().toString(),"wow.png", coordenates);
+            Call<Nota> call = service.createNota(sharedPreferences.getString("token",""), nota);
+            Log.i("tag", nota.getTitulo());
+            Log.i("tag", nota.getCategoria());
+            Log.i("tag", nota.getCoordenates());
+            Log.i("tag", nota.getFoto());
+            Log.i("tag", nota.getUserId().toString());
+            Log.i("tag", String.valueOf(nota.getId()));
+            call.enqueue(new Callback<Nota>() {
 
-            @Override
-            public void onResponse(Call<Nota> call, Response<Nota> response) {
-                if(response.body().getTitulo() != null){
-                    Log.i("tag", "created nota");
-                    Intent intent = new Intent(getApplicationContext(), MapaActivity.class);
-                    startActivity(intent);
-                    finish();
+                @Override
+                public void onResponse(Call<Nota> call, Response<Nota> response) {
+                    if(response.body().getTitulo() != null){
+                        Log.i("tag", "created nota");
+                        Intent intent = new Intent(getApplicationContext(), MapaActivity.class);
+                        startActivity(intent);
+                        finish();
 
-                }else{
-                    Log.i("tag", "not created nota");
-                    Toast.makeText(getApplicationContext(), "Algo correu mal tente novamente", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Log.i("tag", "not created nota");
+                        Toast.makeText(getApplicationContext(), "Algo correu mal tente novamente", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Nota> call, Throwable t) {
-                Log.i("tag", "Error on create");
-            }
-        });
+                @Override
+                public void onFailure(Call<Nota> call, Throwable t) {
+                    Log.i("tag", "Error on create");
+                }
+            });
 
+            }
         }
     }
 

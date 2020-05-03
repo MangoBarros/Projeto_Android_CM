@@ -26,75 +26,27 @@ import retrofit2.Response;
 
 import static intro.multiecras.miguel_barros_android.Account.LoginActivity.SHARED_PREFS;
 
-public class EditNota extends AppCompatActivity   implements AdapterView.OnItemSelectedListener{
+public class EditNota extends AppCompatActivity {
 
     private TextView NotaItemView;
-    private TextView NotaCidadeView;
     private TextView NotaDescView;
     private Integer id;
-    private Spinner mCategoriaView;
-
-    private Integer selected = 1;
-    private Integer old;
-
+    SharedPreferences sharedPreferences;
 
     Nota nota;
 
-    private Button voltar;
-    private Button guardar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_nota);
         Intent i = getIntent();
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         id = i.getIntExtra("id", -1);
-
+        NotaItemView = findViewById(R.id.input_edit_title);
+        NotaDescView = findViewById(R.id.input_edit_desc);
         getNota(id);
-    }
-
-    public void SetParams(Nota nota){
-        voltar=findViewById(R.id.btn_voltar);
-        guardar=findViewById(R.id.btn_create);
-
-        guardar.setText(R.string.guardar);
-
-        NotaItemView = findViewById(R.id.input_title);
-        NotaDescView = findViewById(R.id.input_desc);
-        //NotaCidadeView = findViewById(R.id.input_cidade);
-
-        //id = 0, titulo = 1, descricao = 2, cidade = 3
-        NotaItemView.setText(nota.getTitulo());
-        NotaDescView.setText(nota.getDescricao());
-        //NotaCidadeView.setText(nota.getFoto());
-
-        id = nota.getId();
-        old=nota.getId();
-
-        // A P F T U
-        List<String> categorias = new ArrayList<String>();
-        categorias.add("Automovel");
-        categorias.add("Pessoal");
-        categorias.add("A-Fazeres");
-        categorias.add("Trabalho");
-        categorias.add("Urgente");
-
-        mCategoriaView = (Spinner) findViewById(R.id.spin_categoria);
-
-        mCategoriaView.setOnItemSelectedListener(this);
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categorias);
-
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        mCategoriaView.setAdapter(dataAdapter);
-
-        mCategoriaView.post(new Runnable() {
-            public void run() {
-                mCategoriaView.setSelection(old);
-            }
-        });
-
     }
 
     private void getNota(Integer id) {
@@ -114,70 +66,61 @@ public class EditNota extends AppCompatActivity   implements AdapterView.OnItemS
                             response.body().getFoto(),
                             response.body().getCoordenates()
                     );
-
+                    NotaItemView.setText(nota.getTitulo());
+                    NotaDescView.setText(nota.getDescricao());
                 }else {
-                    Toast.makeText(getApplicationContext(),"Esta Nota não Está disponivel", Toast.LENGTH_SHORT);
+                    Toast.makeText(getApplicationContext(),"Esta Nota não Está disponivel", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
 
             @Override
             public void onFailure(Call<Nota> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Esta Nota não Está disponivel", Toast.LENGTH_SHORT);
+                Toast.makeText(getApplicationContext(),"Esta Nota não Está disponivel", Toast.LENGTH_SHORT).show();
                 //finish();
             }
         });
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        this.selected = position;
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        this.selected = old;
-
     }
 
     public void editNota(View view) {
+        if (NotaItemView.length()>0 && NotaDescView.length() > 0) {
+            GetData service = RetrofitClientInstance.getRetrofitInstance().create(GetData.class);
+            Nota updateNota = new Nota(sharedPreferences.getInt("id", -1), "categoria", NotaItemView.getText().toString(), NotaDescView.getText().toString(), "pick", nota.getCoordenates());
+            Call<Nota> call = service.updateNota(id, sharedPreferences.getString("token", ""), updateNota);
+            call.enqueue(new Callback<Nota>() {
 
-        GetData service = RetrofitClientInstance.getRetrofitInstance().create(GetData.class);
-        Nota updateNota = new Nota(1,"categoria","New tittle", "descr", "pick",nota.getCoordenates());
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        Call<Nota> call = service.updateNota(id,sharedPreferences.getString("token", ""),updateNota);
-        call.enqueue(new Callback<Nota>() {
+                @Override
+                public void onResponse(Call<Nota> call, Response<Nota> response) {
+                    if (response.body() != null) {
+                        try {
+                            nota = new Nota(
+                                    response.body().getUserId(),
+                                    response.body().getCategoria(),
+                                    response.body().getTitulo(),
+                                    response.body().getDescricao(),
+                                    response.body().getFoto(),
+                                    response.body().getCoordenates()
+                            );
+                            finish();
+                            Toast.makeText(getApplicationContext(), "Nota editada com sucesso", Toast.LENGTH_SHORT);
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), "Alguma coisa correu mal, tente novamente", Toast.LENGTH_SHORT);
+                        }
 
-            @Override
-            public void onResponse(Call<Nota> call, Response<Nota> response) {
-                if(response.body() != null){
-                    try {
-                        nota = new Nota(
-                                response.body().getUserId(),
-                                response.body().getCategoria(),
-                                response.body().getTitulo(),
-                                response.body().getDescricao(),
-                                response.body().getFoto(),
-                                response.body().getCoordenates()
-                        );
-                        finish();
-                        Toast.makeText(getApplicationContext(),"Nota editada com sucesso", Toast.LENGTH_SHORT);
-                    }catch (Exception e){
-                        Toast.makeText(getApplicationContext(),"Alguma coisa correu mal, tente novamente", Toast.LENGTH_SHORT);
+
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Alguma coisa correu mal, tente novamente", Toast.LENGTH_SHORT);
                     }
-
-
-                }else {
-                    Toast.makeText(getApplicationContext(),"Alguma coisa correu mal, tente novamente", Toast.LENGTH_SHORT);
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Nota> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Alguma coisa correu mal, tente novamente", Toast.LENGTH_SHORT);
-                //finish();
-            }
-        });
+                @Override
+                public void onFailure(Call<Nota> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Alguma coisa correu mal, tente novamente", Toast.LENGTH_SHORT);
+                    //finish();
+                }
+            });
+
+        }
 
     }
 }

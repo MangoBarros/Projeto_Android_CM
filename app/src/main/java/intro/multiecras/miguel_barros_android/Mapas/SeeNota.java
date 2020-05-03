@@ -34,10 +34,16 @@ public class SeeNota extends AppCompatActivity {
     Nota nota;
 
     TextView titulo;
-    TextView categoria;
     TextView descricao;
     SharedPreferences sharedPreferences;
     Integer user_id ;
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        this.recreate();
+    }
 
 
     @Override
@@ -55,12 +61,9 @@ public class SeeNota extends AppCompatActivity {
     private void fillNota(Nota nota) {
 
         titulo = findViewById(R.id.tituloNota);
-        categoria = findViewById(R.id.Categoria);
         descricao = findViewById(R.id.descricao);
 
-
         titulo.setText(nota.getTitulo());
-        categoria.setText(nota.getCategoria());
         descricao.setText(nota.getDescricao());
 
     }
