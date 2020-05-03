@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Miguel_Barros_android</string>
+    <string name="app_name">City Things</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -54,11 +54,9 @@
     <string name="mail">example@mail.com</string>
     <string name="editar">Edit</string>
     <string name="delete">Delete</string>
-    <string name="editar">Edit</string>
     <string name="notDisponivel">Note not Available</string>
     <string name="editSuccess">Note edited</string>
     <string name="badHappen">Something went wrong,try again</string>
-    <string name="notDisponivel">Note not Available</string>
     <string name="onlyYoursEdit">You can only edit your notes</string>
     <string name="onlyYoursDelete">You can only delete yout notes</string>
     <string name="SuccessDelete">Note deleted</string>

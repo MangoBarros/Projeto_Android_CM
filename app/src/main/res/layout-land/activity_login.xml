@@ -55,24 +55,25 @@
 
             <EditText
                     android:id="@+id/emailIn"
-                    android:layout_width="227dp"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:contentDescription="@string/email"
                     android:ems="10"
+                    android:hint="email@email.com"
                     android:inputType="textPersonName"
-                    android:text="@string/username"
                     app:layout_constraintEnd_toStartOf="@+id/loginLabel"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/loginLabel" />
 
             <EditText
                     android:id="@+id/passwordIn"
-                    android:layout_width="223dp"
-                    android:layout_height="35dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:ems="10"
+                    android:hint="@string/password"
                     android:inputType="textPassword"
-                    android:text="@string/password"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/loginLabel"
                     app:layout_constraintTop_toBottomOf="@+id/loginLabel" />
